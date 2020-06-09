@@ -1,17 +1,22 @@
 package com.mycompany.app.controller;
 import com.mycompany.app.iohandler.InputReader;
 import com.mycompany.app.iohandler.OutputWriter;
+import com.mycompany.app.iohandler.JsonWriter;
+import com.mycompany.app.iohandler.JsonReader;
+
 import io.github.clearwsd.parser.*;
 import io.github.semlink.verbnet.*;
 import io.github.semlink.parser.*;
 import io.github.semlink.propbank.type.PropBankArg;
 import io.github.semlink.semlink.VerbNetAligner;
 import io.github.clearwsd.parser.Nlp4jDependencyParser;
-import com.mycompany.app.iohandler.JsonReader;
+
 import java.util.*;
 import com.mycompany.app.datastructures.JsonElements;
 import com.mycompany.app.datastructures.Sentence;
+import com.mycompany.app.datastructures.BadDataInfo;
 import com.mycompany.app.VNparsing.VNInfoExtractor;
+import com.mycompany.app.VNparsing.WSinfoExtractor;
 
 
 import static io.github.semlink.parser.VerbNetParser.pbRoleLabeler;
@@ -21,7 +26,7 @@ import static io.github.semlink.parser.VerbNetParser.pbRoleLabeler;
  */
 public class App
 {
-    public static void main( String[] args ) throws Exception
+    /*public static void main( String[] args ) throws Exception
     {
     	String filename = "";
       List<Integer> ids = InputReader.readIdFile ("/media/abhidip/2F1499756FA9B115/data/flickr/abhidip_splits/train/fivecaption_train.ids");
@@ -50,11 +55,86 @@ public class App
 
         i++;
 
-        //break;
       }
 
       OutputWriter.writeSRLfiles(sentences, "/media/abhidip/2F1499756FA9B115/data/flickr/abhidip_splits/train/VN_SRL_train.txt");
-    	//vnp.getAnnotation(nodes.get(3));*/
-    }
 
+    }*/
+
+    public static void main( String[] args ) throws Exception
+    {
+    	String filename = "";
+      //List<Integer> ids = InputReader.readIdFile ("/media/abhidip/2F1499756FA9B115/data/flickr/abhidip_splits/train/fivecaption_train.ids");
+    	//List<Sentence> sentences = InputReader.readFileswithId( "/media/abhidip/2F1499756FA9B115/data/flickr/abhidip_splits/train/fivecaption_train.txt.image-locations.txt" , ids);
+      List<JsonElements> nodes = JsonReader.readJsonFile("/media/abhidip/2F1499756FA9B115/data/flickr/abhidip_splits/flickrdata.json");
+
+//--------------- VNparse------------------------------//
+      VNInfoExtractor vnp = new VNInfoExtractor();
+      List<BadDataInfo> badNodeVNSInfo = new ArrayList<>();
+
+      for(int i=0;i<nodes.size(); i++)
+      {
+          System.out.println("===="+i+ ", ");
+          List<Sentence> sentences =  nodes.get(i).sentences();
+
+          BadDataInfo bdVNs = new BadDataInfo(i);
+          for(int j=0; j<sentences.size();j++)
+          {
+              try{
+                Sentence se = sentences.get(j);
+                vnp.getAnnotation(se);
+              }
+              catch(Exception e)
+              {
+                System.out.println("****Error occured:::: "+e.getCause());
+                //badWSIds.add(j);
+                bdVNs.addSentenceId(j);
+                continue;
+              }
+          }
+          if(bdVNs.size()>0)
+            badNodeVNSInfo.add(bdVNs);
+
+          //-------------------------------------------------------//
+          System.gc();
+          //if(i==3)
+            //break;
+      }
+
+  //----------- clear WSD parse-------------------------//
+  /*
+      WSinfoExtractor wsd = new WSinfoExtractor();
+      List<BadDataInfo> badNodeWSInfo = new ArrayList<>();
+
+      for(int i=0;i<nodes.size(); i++)
+      {
+          System.out.println("===="+i+ ", ");
+          List<Sentence> sentences =  nodes.get(i).sentences();
+
+          BadDataInfo bdWs = new BadDataInfo(i);
+
+          for(int j=0; j<sentences.size();j++)
+          {
+              try{
+                Sentence se = sentences.get(j);
+                wsd.getAnnotation(se);
+              }
+              catch(Exception e)
+              {
+                System.out.println("****Error occured:::: "+e.getCause());
+                bdWs.addSentenceId(j);
+                continue;
+              }
+          }
+          if(bdWs.size()>0)
+            badNodeWSInfo.add(bdWs);
+
+            //if(i==5)
+              //break;
+      }*/
+
+      System.out.println(" 94745454554 I am here");
+      JsonWriter.writeJsonFile("/media/abhidip/2F1499756FA9B115/data/flickr/abhidip_splits/flickrdata_VNLabel.json", nodes);
+
+    }
 }

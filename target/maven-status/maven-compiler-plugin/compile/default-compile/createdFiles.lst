@@ -1,8 +1,13 @@
 com/mycompany/app/iohandler/OutputWriter.class
 com/mycompany/app/controller/App.class
-com/mycompany/app/iohandler/InputReader.class
+com/mycompany/app/VNparsing/WSinfoExtractor.class
+com/mycompany/app/utils/Counter$1.class
 com/mycompany/app/utils/StringUtils.class
 com/mycompany/app/datastructures/JsonElements.class
-com/mycompany/app/datastructures/Sentence.class
 com/mycompany/app/iohandler/JsonReader.class
+com/mycompany/app/iohandler/JsonWriter.class
+com/mycompany/app/iohandler/InputReader.class
+com/mycompany/app/utils/Counter.class
+com/mycompany/app/datastructures/BadDataInfo.class
+com/mycompany/app/datastructures/Sentence.class
 com/mycompany/app/VNparsing/VNInfoExtractor.class

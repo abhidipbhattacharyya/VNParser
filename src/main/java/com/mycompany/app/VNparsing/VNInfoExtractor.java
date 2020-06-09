@@ -26,6 +26,14 @@ import io.github.semlink.semlink.SemlinkRole;
 import io.github.semlink.app.Chunking;
 import com.mycompany.app.datastructures.Sentence;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+@Setter
+@Getter
+@Accessors(fluent = true)
+
 public class VNInfoExtractor{
 
 	 // VerbNet index over VerbNet classes/frames
@@ -100,6 +108,7 @@ public class VNInfoExtractor{
 				Chunking<SemlinkRole> arguments = prop.arguments();
 				VnClass predicate = prop.predicate();
 				//System.out.println("++++"+predicate.verbNetId());
+        se.addVnLabels(predicate.verbNetId().toString());
 
 				List<Span<SemlinkRole>> spans = arguments.spans();
 				List<String> BIO = new ArrayList<>();
@@ -145,7 +154,7 @@ public class VNInfoExtractor{
     public void getAnnotation(Sentence se)
     {
 
-      System.out.println("===="+se.id()+" =====" + se.sentence());
+      //System.out.println("===="+se.id()+" =====" + se.sentence());
       VerbNetParse parse = parser.parse(se.sentence());
 
       //System.out.println(parse);
@@ -156,7 +165,7 @@ public class VNInfoExtractor{
 				 List<String> tokens = dp.getTokens();
 
          if (se.tokens() == null)
-         se.tokens(tokens);
+          se.tokens(tokens);
          if(dp.getProposition() == null || tokens == null)
          {
             System.out.println("ERROR in sen:"+se.id()+": "+se.sentence());

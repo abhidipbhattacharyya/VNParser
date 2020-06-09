@@ -18,6 +18,7 @@ public class Sentence
 	int verbIndex;
 	List<String> tokens = null;
 	List<String> vnlabels = new ArrayList<String>();
+	List<String> wslabels = new ArrayList<String>();
 	List<List<String>> tag_sentences = new ArrayList<List<String>>();
 
 	List<List<String>> conll_sentences = null;
@@ -41,6 +42,11 @@ public class Sentence
 	public void addVnLabels(String label)
 	{
 		vnlabels.add(label);
+	}
+
+	public void addWSLabels(String label)
+	{
+		wslabels.add(label);
 	}
 
 	private List<String> bio2SE(List<String> tags)
@@ -113,4 +119,12 @@ public class Sentence
 			}
 			return output;
 		}
+
+	public String toString()
+	{
+		StringBuffer ss =  new StringBuffer();
+		ss.append(sentence);
+
+		return ss.toString();
+	}
 }
