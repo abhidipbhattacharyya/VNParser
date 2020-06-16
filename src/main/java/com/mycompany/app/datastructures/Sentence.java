@@ -21,6 +21,8 @@ public class Sentence
 	List<String> wslabels = new ArrayList<String>();
 	List<List<String>> tag_sentences = new ArrayList<List<String>>();
 
+	HashMap<String, String> verb2Role = new HashMap<>();
+
 	List<List<String>> conll_sentences = null;
 
 
@@ -42,6 +44,12 @@ public class Sentence
 	public void addVnLabels(String label)
 	{
 		vnlabels.add(label);
+	}
+
+	public void addWSLabels(String verb, String label)
+	{
+		verb2Role.put(verb, label);
+		wslabels.add(label);
 	}
 
 	public void addWSLabels(String label)
@@ -110,7 +118,10 @@ public class Sentence
 				StringBuffer ss = new StringBuffer(sentence +"\n");
 				for(int i=0; i<tokens.size();i++)
 				{
-					String line = StringUtils.ljust(tokens.get(i), 15)  + StringUtils.rjust(conll.get(i), 15) +"\n";
+					String tok  = tokens.get(i);
+					if(verb2Role.containsKey(tok))
+						tok =  verb2Role.get(tok);
+					String line = StringUtils.ljust(tok, 15)  + StringUtils.rjust(conll.get(i), 15) +"\n";
 					ss.append(line);
 				}
 				ss.append("\n");

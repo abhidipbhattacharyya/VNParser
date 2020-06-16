@@ -40,7 +40,8 @@ public class WSinfoExtractor{
       {
         //System.out.println(prediction.originalText()+"----"+ prediction.id()+"---"+ prediction.sense().getNumber() + " --> " + prediction.sense().getName());
         labels.add(prediction.id());
-        se.addWSLabels(prediction.id());
+        se.addWSLabels(prediction.originalText(), prediction.id());
+        //se.addWSLabels(prediction.id());
       }
       //return labels;
   }
