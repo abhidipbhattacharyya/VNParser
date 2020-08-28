@@ -131,6 +131,36 @@ public class Sentence
 			return output;
 		}
 
+		public String getConllStringsNew()
+		{
+			//List<String> output = new ArrayList<>();
+			if(conll_sentences == null)
+				getCONLLformattedTags();
+
+
+			if(tokens== null)
+				return null;
+			StringBuffer ss = new StringBuffer();//(sentence +"\n");
+			for(int i=0; tokens!= null && i<tokens.size();i++)
+			{
+					String tok  = tokens.get(i);
+					if(verb2Role.containsKey(tok))
+						tok =  verb2Role.get(tok);
+					StringBuffer line = new StringBuffer(StringUtils.ljust(tok, 15));
+					for(List<String> conll:conll_sentences)
+					{
+						line.append(StringUtils.rjust(conll.get(i), 15)) ;
+					}
+					line.append("\n");
+					ss.append(line.toString());
+			}
+			ss.append("\n");
+			//System.out.print(ss);
+					//output.add(ss.toString());
+
+			return ss.toString();
+		}
+
 	public String toString()
 	{
 		StringBuffer ss =  new StringBuffer();

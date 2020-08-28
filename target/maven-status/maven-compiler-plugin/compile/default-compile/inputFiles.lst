@@ -1,12 +1,14 @@
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/controller/App.java
-/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/datastructures/JsonElements.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/datastructures/Sentence.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/iohandler/InputReader.java
+/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/utils/Counter.java
+/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/iohandler/XMLinputreader.java
+/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/datastructures/BadDataInfo.java
+/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/datastructures/JsonElements.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/iohandler/JsonWriter.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/utils/StringUtils.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/VNparsing/VNInfoExtractor.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/iohandler/OutputWriter.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/VNparsing/WSinfoExtractor.java
-/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/utils/Counter.java
-/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/datastructures/BadDataInfo.java
+/media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/datastructures/XMLfileInfo.java
 /media/abhidip/2F1499756FA9B115/java_workspace/my-app/src/main/java/com/mycompany/app/iohandler/JsonReader.java

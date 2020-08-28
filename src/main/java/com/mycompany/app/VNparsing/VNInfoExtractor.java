@@ -100,6 +100,85 @@ public class VNInfoExtractor{
 			 }
 		}
 
+    public void thematicRoleAnalysis2(Proposition<VnClass, SemlinkRole> prop, List<String> tokens, Sentence se)
+    {
+
+        //System.out.println("-------------------------------------------");
+        Chunking<SemlinkRole> arguments = prop.arguments();
+        VnClass predicate = prop.predicate();
+        //System.out.println("++++"+predicate.verbNetId());
+        se.addVnLabels(predicate.verbNetId().toString());
+
+        List<Span<SemlinkRole>> spans = arguments.spans();
+        List<String> BIO = new ArrayList<>();
+
+        for (String t: tokens)
+        {
+          BIO.add("O");
+        }
+
+        for(Span<SemlinkRole> sp: spans)
+        {
+
+          SemlinkRole label = sp.label();
+          String phrase = sp. get(tokens).stream().map(Object::toString).collect(Collectors.joining(" "));
+          Optional<PropBankArg> pArg = label.pb();
+          //PropBankArg pArgVal = pArg.get();
+          Optional<ThematicRoleType> tr =  label.vn();
+          StringBuilder pArgS = new StringBuilder();
+          //String pArgS = "";
+          //pArg.ifPresent( value -> pArgS.append(value.toString()));
+          tr.ifPresent( value -> pArgS.append(value.toString()));
+
+          if(tr.isPresent() && tr.get().toString().equalsIgnoreCase("Verb"))
+          {
+            se.addWSLabels(tokens.get(sp.startIndex()), predicate.verbNetId().toString());
+          }
+
+
+          //System.out.println(pArgS.toString() + '\t' + phrase);
+
+          for(int i= sp.startIndex(); i<= sp.endIndex();i++)
+          {
+              String tag = pArgS.toString();
+              if (i == sp.startIndex())
+                tag = "B-"+ tag;
+              else
+                tag = "I-"+ tag;
+              BIO.set(i, tag);
+          }
+
+        }
+        //System.out.println(tokens.stream().map(Object::toString).collect(Collectors.joining(" ")));
+        //System.out.println(BIO.stream().map(Object::toString).collect(Collectors.joining(" ")));
+        se.addTagTokens(BIO);
+        //System.out.println("-------------------------------------------");
+        //return BIO;
+    }
+
+    public void getAnnotation2(Sentence se)
+    {
+
+      //System.out.println("===="+se.id()+" =====" + se.sentence());
+      VerbNetParse parse = parser.parse(se.sentence());
+
+      //System.out.println(parse);
+      List<VerbNetProp> props = parse.props();
+      for(int i=0;i<props.size();i++)
+			{
+				 DefaultVerbNetProp dp = ( DefaultVerbNetProp)props.get(i);
+				 List<String> tokens = dp.getTokens();
+
+         if (se.tokens() == null)
+          se.tokens(tokens);
+         if(dp.getProposition() == null || tokens == null)
+         {
+            System.out.println("ERROR in sen:"+se.id()+": "+se.sentence());
+         }
+         else
+          thematicRoleAnalysis2(dp.getProposition(), tokens, se);
+      }
+    }
 
 		public void thematicRoleAnalysis(Proposition<VnClass, SemlinkRole> prop, List<String> tokens, Sentence se)
 		{
@@ -129,6 +208,7 @@ public class VNInfoExtractor{
 					StringBuilder pArgS = new StringBuilder();
 					//String pArgS = "";
 					pArg.ifPresent( value -> pArgS.append(value.toString()));
+          //tr.ifPresent( value -> pArgS.append(value.toString()));
 
           //System.out.println(pArgS.toString() + '\t' + phrase);
 
